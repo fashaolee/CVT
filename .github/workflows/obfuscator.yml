@@ -30,7 +30,7 @@ jobs:
 
       - name: Obfuscate Vless source code
         run: |
-          javascript-obfuscator Vless_workers_pages/vless源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js --output Vless_workers_pages/_worker.js \
+          javascript-obfuscator "Vless_workers_pages/vless源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js" --output "Vless_workers_pages/_worker.js" \
           --compact true \
           --control-flow-flattening true \
           --control-flow-flattening-threshold 1 \
@@ -46,7 +46,7 @@ jobs:
 
       - name: Obfuscate Trojan source code
         run: |
-          javascript-obfuscator Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js --output Trojan_workers_pages/_worker.js \
+          javascript-obfuscator "Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js" --output "Trojan_workers_pages/_worker.js" \
           --compact true \
           --control-flow-flattening true \
           --control-flow-flattening-threshold 1 \
@@ -64,7 +64,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add Vless_workers_pages/_worker.js Trojan_workers_pages/_worker.js
+          git add "Vless_workers_pages/_worker.js" "Trojan_workers_pages/_worker.js"
           git commit -m "Obfuscate _worker.js files" || echo "No changes to commit"
 
       - name: Push changes
