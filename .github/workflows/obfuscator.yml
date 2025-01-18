@@ -31,7 +31,6 @@ jobs:
       - name: Obfuscate code
         run: |
           javascript-obfuscator Vless_workers_pages/vless源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js --output Vless_workers_pages/_worker.js \
-          javascript-obfuscator Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js --output Trojan_workers_pages/_worker.js \
           --compact true \
           --control-flow-flattening true \
           --control-flow-flattening-threshold 1 \
@@ -45,6 +44,21 @@ jobs:
           --transform-object-keys true \
           --unicode-escape-sequence true
 
+      - name: Obfuscate code
+        run: |
+          javascript-obfuscator Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js --output Trojan_workers_pages/_worker.js \
+          --compact true \
+          --control-flow-flattening true \
+          --control-flow-flattening-threshold 1 \
+          --dead-code-injection true \
+          --dead-code-injection-threshold 1 \
+          --identifier-names-generator hexadecimal \
+          --rename-globals true \
+          --string-array true \
+          --string-array-encoding 'rc4' \
+          --string-array-threshold 1 \
+          --transform-object-keys true \
+          --unicode-escape-sequence true
 
       - name: Commit changes
         run: |
