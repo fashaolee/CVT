@@ -1,13 +1,9 @@
 name: Obfuscate and Commit
 
 on:
-    #push:
-    #    paths:
-    #        - '明文源码.js'
-    schedule:
-      - cron: "15 1 * * *" # 每天 1:15 运行
-    workflow_dispatch:
-
+  schedule:
+    - cron: "15 1 * * *" # 每天 1:15 运行
+  workflow_dispatch:
 
 jobs:
   obfuscate:
@@ -30,7 +26,7 @@ jobs:
 
       - name: Obfuscate Vless source code
         run: |
-          javascript-obfuscator "Vless_workers_pages/vless源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js" --output "Vless_workers_pages/_worker.js" \
+          javascript-obfuscator Vless_workers_pages/vless源码\(请使用上面的_worker.js，本文件无法使用，仅供DIY\).js --output Vless_workers_pages/_worker.js \
           --compact true \
           --control-flow-flattening true \
           --control-flow-flattening-threshold 1 \
@@ -46,7 +42,7 @@ jobs:
 
       - name: Obfuscate Trojan source code
         run: |
-          javascript-obfuscator "Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js" --output "Trojan_workers_pages/_worker.js" \
+          javascript-obfuscator Trojan_workers_pages/trojan源码\(请使用上面的_worker.js，本文件无法使用，仅供DIY\).js --output Trojan_workers_pages/_worker.js \
           --compact true \
           --control-flow-flattening true \
           --control-flow-flattening-threshold 1 \
