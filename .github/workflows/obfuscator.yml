@@ -7,7 +7,7 @@ on:
     #        - 'Trojan_workers_pages/trojan源码(请使用上面的_worker.js，本文件无法使用，仅供DIY).js'
     workflow_dispatch:
     schedule:
-      - cron: "10 18 * * *" # every day
+      - cron: "35 16 * * *" # every day
 
 jobs:
   obfuscate:
