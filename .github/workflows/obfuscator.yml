@@ -1,0 +1,94 @@
+name: 混淆最新版本源码
+on:
+    #push:
+    #    paths:
+    #        - '明文源码.js'
+    schedule:
+      - cron: "45 17 */30 * *" 
+    workflow_dispatch:
+
+jobs:
+  obfuscate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 使用 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: 安装依赖
+        run: npm install -g javascript-obfuscator
+
+
+      - name: 混淆代码
+        run: |
+          javascript-obfuscator Trojan_workers_pages/_worker.js --output Trojan_workers_pages/_worker混淆.js \
+          --compact true \
+          --control-flow-flattening true \
+          --control-flow-flattening-threshold 1 \
+          --dead-code-injection true \
+          --dead-code-injection-threshold 1 \
+          --identifier-names-generator hexadecimal \
+          --rename-globals true \
+          --string-array true \
+          --string-array-encoding 'rc4' \
+          --string-array-threshold 1 \
+          --transform-object-keys true \
+          --unicode-escape-sequence true
+
+          
+      - name: 混淆代码
+        run: |
+          javascript-obfuscator Vless_workers_pages/_worker.js --output Vless_workers_pages/_worker混淆.js \
+          --compact true \
+          --control-flow-flattening true \
+          --control-flow-flattening-threshold 1 \
+          --dead-code-injection true \
+          --dead-code-injection-threshold 1 \
+          --identifier-names-generator hexadecimal \
+          --rename-globals true \
+          --string-array true \
+          --string-array-encoding 'rc4' \
+          --string-array-threshold 1 \
+          --transform-object-keys true \
+          --unicode-escape-sequence true
+
+      - name: 混淆代码
+        run: |
+          javascript-obfuscator Vless_workers_pages/nat64套壳版明文.js --output Vless_workers_pages/nat64套壳版混淆.js \
+          --compact true \
+          --control-flow-flattening true \
+          --control-flow-flattening-threshold 1 \
+          --dead-code-injection true \
+          --dead-code-injection-threshold 1 \
+          --identifier-names-generator hexadecimal \
+          --rename-globals true \
+          --string-array true \
+          --string-array-encoding 'rc4' \
+          --string-array-threshold 1 \
+          --transform-object-keys true \
+          --unicode-escape-sequence true
+
+      - name: 提交更改
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Trojan_workers_pages/_worker混淆.js Vless_workers_pages/_worker混淆.js Vless_workers_pages/nat64套壳版混淆.js
+          if git diff --cached --quiet; then
+            echo "没有文件更改，跳过提交"
+          else
+            git commit -m "混淆 Trojan 和 Vless _worker.js 文件"
+          fi
+
+      - name: 推送更改
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_cvt }}
